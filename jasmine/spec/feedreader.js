@@ -31,29 +31,29 @@ $(function() {
          * in the allFeeds object and ensures it has a URL defined
          * and that the URL is not empty.
          */
-         it('have an URL', function(){
-            for(let feed of allFeeds) {
+         for(let feed of allFeeds) {
+            it('have an URL', function(){
                 expect(feed.url).toBeDefined();
                 expect(feed.url.length).not.toBe(0);
-            };
-         });
+            });
+         };
 
         /* TODO: Write a test that loops through each feed
          * in the allFeeds object and ensures it has a name defined
          * and that the name is not empty.
          */
-         it('have a name', function(){
-            for(let feed of allFeeds) {
+         for(let feed of allFeeds) {
+            it('have a name', function(){
                 expect(feed.name).toBeDefined();
                 expect(feed.name.length).not.toBe(0);
-            };
-         });
+            });
+         };
     });
 
 
     /* TODO: Write a new test suite named "The menu" */
     describe('The menu', function() {
-        let body = document.getElementsByClassName('menu-hidden');
+        let menu = document.getElementsByClassName('menu-hidden'); // look for the css class that hides the menu
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -62,7 +62,7 @@ $(function() {
          */
          it('is hidden by default', function() {
 
-            expect(body.length).not.toBe(0);
+            expect(menu.length).not.toBe(0); // if the menu is hidden the class ".menu-hidden" should be present and therefore the HTML Collection "menu" should not be empty => length not 0
          });
 
          /* TODO: Write a test that ensures the menu changes
@@ -71,20 +71,20 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           it('shows and hides on clicking the menu icon', function () {
-              let menuIcon = document.querySelector('.menu-icon-link');
+              let menuIcon = document.querySelector('.menu-icon-link'); // get the HTML element that opens and closes the menu
 
-              function hideShow() {
+              function hideShow() { // click on the menu and toggle the class ".menu-hidden"
                   menuIcon.click();
-                  body = document.getElementsByClassName('menu-hidden');
+                  menu = document.getElementsByClassName('menu-hidden');
               };
 
               hideShow();
 
-              expect(body.length).toBe(0);
+              expect(menu.length).toBe(0); // after one click the class ".menu-hidden" should not be present
 
               hideShow();
 
-              expect(body.length).not.toBe(0);
+              expect(menu.length).not.toBe(0); // after another click the class ".menu-hidden" should be present again
           });
     });
 
@@ -99,18 +99,18 @@ $(function() {
          * Remember, loadFeed() is asynchronous so this test will require
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
-        beforeEach(function(done) {
+        beforeEach(function(done) { // load a new feed before each expectation
             loadFeed(i, function(){
                 done();
             });
             i += 1;
         });
 
-        for (let feed of allFeeds) {
+        for (let feed of allFeeds) { // loop through the feeds to check each
             it('are present', function(done) {
-                let entries = document.querySelectorAll('.feed a');
+                let entries = document.querySelectorAll('.feed a'); // get the entries
 
-                expect(entries.length).not.toBe(0);
+                expect(entries.length).not.toBe(0); // check if there are entries
                 done();
             });
         };
@@ -127,18 +127,18 @@ $(function() {
          * Remember, loadFeed() is asynchronous.
          */
 
-        beforeEach(function(done) {
+        beforeEach(function(done) { // load a new feed before each expectation
             loadFeed(i, function(){
                 done();
             });
-            entry = document.querySelector('h2').innerHTML;
-            entries.push(entry);
+            entry = document.querySelector('h2').innerHTML; //get the title of the first entry
+            entries.push(entry); // add to an arry
             i += 1;
         });
 
-        for (let feed in allFeeds) {
+        for (let feed in allFeeds) { // loop through the feeds
             it('changes feed content', function(done) {
-                expect(entries[feed]).not.toEqual(entries[feed - 1]);
+                expect(entries[feed]).not.toEqual(entries[feed - 1]); // compare the entry corresponding to the feed with the one before to check for a change
                 done();
             });
         };
